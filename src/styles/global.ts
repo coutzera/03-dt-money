@@ -24,7 +24,7 @@ export const GlobalStyle = createGlobalStyle`
 
   @media screen and (max-width: 574px) {
     html {
-      grid-template-columns: 1fr;
+      font-size: 87.5%
     }
     
   }
