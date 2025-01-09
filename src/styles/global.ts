@@ -21,4 +21,11 @@ export const GlobalStyle = createGlobalStyle`
   body, input, textarea, button {
     font: 400 1rem Roboto, sans-serif;
   }
+
+  @media screen and (max-width: 574px) {
+    html {
+      grid-template-columns: 1fr;
+    }
+    
+  }
 `;
