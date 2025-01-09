@@ -1,28 +1,20 @@
 {
   "transactions": [
     {
-      "id": "1",
-      "description": "Desenvolvimento de site",
+      "description": "Salário mensal",
+      "price": 3700,
+      "category": "Salário",
       "type": "income",
-      "category": "Venda",
-      "price": 14000,
-      "createdAt": "2025-01-08T21:52:55.301Z"
+      "createdAt": "2025-01-09T15:34:45.039Z",
+      "id": 1
     },
     {
-      "id": "2",
-      "description": "Hamburguer",
+      "description": "Escola do Benício",
+      "price": 470,
+      "category": "Educação",
       "type": "outcome",
-      "category": "Alimentação",
-      "price": 59,
-      "createdAt": "2025-01-07T12:52:55.301Z"
-    },
-    {
-      "id": "3",
-      "description": "Freelancer - Desenvolvimento de software",
-      "type": "income",
-      "category": "Freelancer",
-      "price": 4000,
-      "createdAt": "2025-01-10T13:52:55.301Z"
+      "createdAt": "2025-01-09T15:36:14.492Z",
+      "id": 2
     }
   ]
 }

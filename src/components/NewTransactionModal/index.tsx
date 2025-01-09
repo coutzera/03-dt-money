@@ -10,6 +10,8 @@ import {
   TransactionTupe,
   TransactionTypeButton,
 } from "./styles";
+import { TransactionsContext } from "../../contexts/TransactionsContext";
+import { useContextSelector } from "use-context-selector";
 
 const NewTransactionFormSchema = z.object({
   description: z.string(),
@@ -21,20 +23,28 @@ const NewTransactionFormSchema = z.object({
 type NewTransactionFormInputs = z.infer<typeof NewTransactionFormSchema>;
 
 export function NewTransactionModal() {
+  const createTransaction = useContextSelector(
+    TransactionsContext,
+    (context) => {
+      return context.createTransaction;
+    }
+  );
   const {
     control,
     register,
     handleSubmit,
     formState: { isSubmitting },
+    reset,
   } = useForm<NewTransactionFormInputs>({
     resolver: zodResolver(NewTransactionFormSchema),
     defaultValues: { type: "income" },
   });
 
   async function handleCreateNewTransaction(data: NewTransactionFormInputs) {
-    await new Promise((resolve) => setTimeout(resolve, 5000));
-    // Implement your logic to create a new transaction here
-    console.log("New transaction created:", data);
+    const { description, category, price, type } = data;
+
+    await createTransaction({ description, category, price, type }); // Create a new transaction
+    reset(); // Reset the form state after creating a new transaction
   }
 
   return (
