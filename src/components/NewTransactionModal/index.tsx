@@ -1,5 +1,8 @@
+import { ArrowCircleDown, ArrowCircleUp, X } from "phosphor-react";
+import { zodResolver } from "@hookform/resolvers/zod";
 import * as Dialog from "@radix-ui/react-dialog";
-
+import { useForm } from "react-hook-form";
+import * as z from "zod";
 import {
   CloseButton,
   Content,
@@ -7,8 +10,31 @@ import {
   TransactionTupe,
   TransactionTypeButton,
 } from "./styles";
-import { ArrowCircleDown, ArrowCircleUp, X } from "phosphor-react";
+
+const NewTransactionFormSchema = z.object({
+  description: z.string(),
+  price: z.number(),
+  category: z.string(),
+  /* type: z.enum(["income", "outcome"]), */
+});
+
+type NewTransactionFormInputs = z.infer<typeof NewTransactionFormSchema>;
+
 export function NewTransactionModal() {
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm<NewTransactionFormInputs>({
+    resolver: zodResolver(NewTransactionFormSchema),
+  });
+
+  async function handleCreateNewTransaction(data: NewTransactionFormInputs) {
+    await new Promise((resolve) => setTimeout(resolve, 5000));
+    // Implement your logic to create a new transaction here
+    console.log("New transaction created:", data);
+  }
+
   return (
     <Dialog.Portal>
       <Overlay />
@@ -19,10 +45,25 @@ export function NewTransactionModal() {
         <CloseButton>
           <X size={24} />
         </CloseButton>
-        <form action="">
-          <input type="text" placeholder="Descrição" required />
-          <input type="number" placeholder="Preço" required />
-          <input type="text" placeholder="Categoria" required />
+        <form onSubmit={handleSubmit(handleCreateNewTransaction)}>
+          <input
+            type="text"
+            placeholder="Descrição"
+            required
+            {...register("description")}
+          />
+          <input
+            type="number"
+            placeholder="Preço"
+            required
+            {...register("price", { valueAsNumber: true })}
+          />
+          <input
+            type="text"
+            placeholder="Categoria"
+            required
+            {...register("category")}
+          />
 
           <TransactionTupe>
             <TransactionTypeButton $variant="income" value="income">
@@ -36,7 +77,9 @@ export function NewTransactionModal() {
             </TransactionTypeButton>
           </TransactionTupe>
 
-          <button type="submit">Cadastrar</button>
+          <button type="submit" disabled={isSubmitting}>
+            Cadastrar
+          </button>
         </form>
       </Content>
     </Dialog.Portal>
